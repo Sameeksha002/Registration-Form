@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Index</title>
+  <script src="https://cdn.tailwindcss.com"> </script>
+  <script> 
+  
+  //check that nothing is leave blank before form submission
+  function Form_submit(){
+	  var flag=0;
+	  
+	  if(document.getElementById("name").value.length==0){
+		  flag=1;
+	  }
+	  if(document.getElementById("email").value.length==0){
+		  flag=1;
+	  }
+	  if(document.getElementById("password").value.length==0){
+		  flag=1;
+	  }
+	  if(document.getElementById("repassword").value.length==0){
+		  flag=1;
+	  }
+	  if(document.getElementById("phn").value.length==0){
+		  flag=1;
+	  }
+	  if(document.getElementById("password").value!=document.getElementById("repassword").value){
+		  flag=1;
+	  }
+	  
+	  if(flag=1){
+		  return false;
+	  }
+	  else return true;
+  }
+  
+  //phone number checking function
+  function phno(){
+	  var ph= document.getElementById("phn").value;
+	  if(ph.length==0){
+		   isValid(ph,"error_phn");
+	   }
+	  else if(isNaN(ph)|| ph.length!=10){
+		  document.getElementById("error_phn").innerHTML="Is Not A Number or Not A 10 Digit Number";
+	  }
+	  else	 document.getElementById("error_phn").innerHTML="";  
+  }
+  
+  //checking that any element is not leave blank
+  function isValid(value,id){
+	  if(value.length==0){
+		  document.getElementById(id).innerHTML="Cant Leave It Blank";
+	  }
+	  else document.getElementById(id).innerHTML="";		  
+  }
+  
+  //checking for password mismatch condition 
+  function checkpass(){
+	  var pass=document.getElementById("password").value;
+	  var repass=document.getElementById("repassword").value;
+	   if(repass.length==0){
+		   isValid(repass,'error_repassword');
+	   }
+	   else if(pass!=repass && pass.length!=0){
+	       document.getElementById("error_repassword").innerHTML="Password Mismatch";
+	   }
+	   else	   document.getElementById("error_repassword").innerHTML="";
+  }
+  
+  //password validation function
+  function passValid(){
+	  var pass=document.getElementById("password").value;
+	  const lowcase=new RegExp('(?=.*[a-z])');
+	  const uprcase=new RegExp('(?=.*[A-Z])');
+	  const no=new RegExp('(?=.*[0-9])');
+	  const spch=new RegExp('(?=.*[!@#\$%\^&\*])');
+	  const len=new RegExp('(?=.{8,20})');
+	  const pattern=/^(?=[^a-z]*[a-z])(?=[^A-Z]*[A-Z])(?=\D*\d)(?=[^!#%]*[!#%])[A-Za-z0-9!#%]{8,32}$/;
+	  if(!pass.match(pattern)){
+		  document.getElementById("error_password").innerHTML="Incorrect Format Of Password";
+	  }
+	  else document.getElementById("error_password").innerHTML="";
+		  
+
+  }
+  
+  function myfunc(v,i){
+	  if(v.length==0){
+	    isValid(v,i);
+	  }
+	  else passValid();
+  }
+  
+  </script>
+  
+</head>
+
+<body>
+<div class="grid h-screen items-center justify-center text-start bg-gradient-to-r from-purple-500 to-pink-500">
+
+<form class="grid gap-4 grid-cols" action="Submit" method="post" onsubmit="return Form_submit()">
+<label class="text-white text-bold text-xl" for="name">Enter Name:</label>
+<input class="w-80 border border-blue-500 p-1 border-double " type="text" id="name" placeholder="Enter Name" onblur="isValid(this.value,'error_name')"/>
+<div class="text-red-900" id="error_name"></div>
+
+<label class="text-white text-bold text-xl"  for="email">Enter Email:</label>
+<input class="w-80 border border-blue-500 p-1 border-double "  type="email" id="email" placeholder="Enter Email" onblur="isValid(this.value,'error_email')"/>
+<div class="text-red-900" id="error_email"></div>
+
+<label class="text-white text-bold text-xl"  for="password">Enter Password:</label>
+<input class="w-80 border border-blue-500 p-1 border-double "  type="password" id="password" placeholder="Enter Password" onblur="myfunc(this.value,'error_password')"/>
+<div class="text-red-900" id="error_password"></div>
+
+<label class="text-white text-bold text-xl"  for="repassword">Enter Password Again:</label>
+<input class="flex w-80 border border-blue-500 p-1 border-double " type="password" id="repassword" placeholder="Enter Password Again" onblur="checkpass()"/>
+<div class="text-red-900" id="error_repassword"></div>
+
+<label class="text-white text-bold text-xl"  for="phn">Enter Phone No.:</label>
+<input class="flex w-80 border border-blue-500 p-1 border-double " type="text" id="phn" placeholder="Enter Phone No." onblur="phno()"/>
+<div class="text-red-900" id="error_phn"></div>
+
+<input class="text-center w-24 rounded-md text-blue-500 bg-yellow-300 p-1" type="submit" value="Submit"/>
+</form>
+</div>
+</body>
+</html>
